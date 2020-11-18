@@ -1,12 +1,14 @@
-
+<div class="container">
 <div class="row">
 	<div class="col-xs-3">
 
+
 		<h2>User info</h2>
-		<%= render 'users/profile' %>
+		<%= render 'users/profile', user: current_user %>
 
 		<h2>New book</h2>
-		<%= render 'books/form', book: @book %>
+		<%= render 'books/form', book: @books %>
+		
 
 	</div>
 
@@ -23,11 +25,13 @@
 					</td>
 					<td><%= link_to @book.title, book_path(@book) %></td>
 					<td><%= @book.body %></td>
+					<% if current_user == @book.user %>
 					<td><%= link_to "Edit", edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
 					<td><%= link_to "Destroy", book_path(@book), method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
+					<% end %>
 				</tr>
 			</table>
 
 	</div>
 </div>
-
+</div>
