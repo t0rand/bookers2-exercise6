@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :ensure_correct_user, only: [:update, :edit]
+  before_action :ensure_correct_user, only: [:update, :edit, :following, :followers]
 
   def show
     @user = User.find(params[:id])
+    @users = User.all
     @books = @user.books
     @book = Book.new
   end
@@ -18,7 +19,6 @@ class UsersController < ApplicationController
     #unless current_user.id == @user.id
       #redirect_to user_path(current_user)
     #end
-
   end
 
   def update
@@ -27,6 +27,19 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def following
+    @user = User.find(params[:id])
+    #binding.pry
+    @users = @user.following_user
+    render 'show_follow'
+  end
+
+  def followers
+    @user = User.find(params[:id])
+    @users = @user.follower_user
+    render 'show_follower'
   end
 
   private

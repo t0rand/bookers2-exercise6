@@ -13,7 +13,7 @@ class FavoritesController < ApplicationController
     book = Book.find(params[:book_id])
     favorite = current_user.favorites.find_by(book_id: book.id)
     favorite.delete
-     redirect_back(fallback_location: root_path) #⇦行動する前に居た画面に戻る。
+    redirect_back(fallback_location: root_path) #⇦行動する前に居た画面に戻る。
   end
 
 end
