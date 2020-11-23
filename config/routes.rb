@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   #resources :users, only: [:show, :index, :edit, :update]
   resources :users do
     member do
-     get :following, :followers
+      get :following, :followers
     end
   end
 
@@ -14,9 +14,11 @@ Rails.application.routes.draw do
     resources :book_comments, only: [:create, :destroy]
   end
 
-  #フォローする
+  #フォローするメソッド
   post 'follow/:id' => 'relationships#follow', as: 'follow'
-  #フォロー外す
+  #フォロー外すメソッド
   post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow'
+  #検索結果で飛ばす先を決める
+  get 'search' => 'search#index'
 
 end
