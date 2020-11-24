@@ -22,17 +22,20 @@
 					<td><%= @book.body %></td>
 					<!--いいね機能　ここから-->
 					<td>
-						<% if @book.favorited_by?(current_user) %>
-  							<%= link_to book_favorites_path(@book), method: :delete do %>
-    							<i class="glyphicon glyphicon-heart" aria-hidden="true" ></i>
-    							<%= @book.favorites.count %>
-  							<% end %>
-							<% else %>
-  							<%= link_to book_favorites_path(@book), method: :post do %>
-    							<i class="glyphicon glyphicon-heart-empty" aria-hidden="true" ></i>
-    							<%= @book.favorites.count %>
-  							<% end %>
-						<% end %>
+						<div id="favorite-<%= book.id %>">
+             <%= render 'favorites/favorites', book: @book %>
+          	</div>
+						<!--<%# if @book.favorited_by?(current_user) %>-->
+  				<!--			<%#= link_to book_favorites_path(@book), method: :delete do %>-->
+    		<!--					<i class="glyphicon glyphicon-heart" aria-hidden="true" ></i>-->
+    		<!--					<%#= @book.favorites.count %>-->
+  				<!--			<%# end %>-->
+						<!--	<%# else %>-->
+  				<!--			<%#= link_to book_favorites_path(@book), method: :post do %>-->
+    		<!--					<i class="glyphicon glyphicon-heart-empty" aria-hidden="true" ></i>-->
+    		<!--					<%#= @book.favorites.count %>-->
+  				<!--			<%# end %>-->
+						<!--<%# end %>-->
 					</td>
 					<!--いいね機能 ここまで-->
 					<!--コメント数　ここから-->
