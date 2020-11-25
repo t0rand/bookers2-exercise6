@@ -20,30 +20,19 @@
 					</td>
 					<td><%= link_to @book.title, book_path(@book) %></td>
 					<td><%= @book.body %></td>
-					<!--いいね機能　ここから-->
+					<!--いいね機能非同期　ここから-->
 					<td>
-						<div id="favorite-<%= book.id %>">
-             <%= render 'favorites/favorites', book: @book %>
+						<div id="favorite-<%= @book.id %>">
+             	<%= render 'favorites/favorites', book: @book %>
           	</div>
-						<!--<%# if @book.favorited_by?(current_user) %>-->
-  				<!--			<%#= link_to book_favorites_path(@book), method: :delete do %>-->
-    		<!--					<i class="glyphicon glyphicon-heart" aria-hidden="true" ></i>-->
-    		<!--					<%#= @book.favorites.count %>-->
-  				<!--			<%# end %>-->
-						<!--	<%# else %>-->
-  				<!--			<%#= link_to book_favorites_path(@book), method: :post do %>-->
-    		<!--					<i class="glyphicon glyphicon-heart-empty" aria-hidden="true" ></i>-->
-    		<!--					<%#= @book.favorites.count %>-->
-  				<!--			<%# end %>-->
-						<!--<%# end %>-->
 					</td>
-					<!--いいね機能 ここまで-->
+					<!--いいね機能非同期 ここまで-->
 					<!--コメント数　ここから-->
 					<td>
-						<div class="comment-list bt style-2" id="comments">
-						  <div class="float-wrapper">
+						<div class="comment-list bt style-2">
+						  <div class="float-wrapper"></div>
     					<div class="comment-count">コメント数：<%= @book.book_comments.count %></div>
-  						</div>
+  					</div>
 					</td>
 					<!--コメント数　ここまで-->
 
@@ -53,24 +42,13 @@
 					<% end %>
 				</tr>
 			</table>
-			<!--コメント一覧-->
-  <% @book.book_comments.each do |book_comment| %>
-      <div>
-          <%= attachment_image_tag(@book_comment.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %>
-          <%= book_comment.comment %>
-
-          <% if book_comment.user == current_user %>
-            <%= link_to "destroy", book_book_comment_path(book_comment.book, @book), method: :delete, class: "btn-sm btn-danger" %>
-          <% end %>
-        </div>
-
-  		<div>
-  			<%= book_comment.user.name %>
-  		</div>
-  		<% end %>
-			<!--コメント一覧ここまで-->
+			<!--コメント一覧非同期-->
+		<div id="comments">
+        	<%= render 'comment', book: @book %>
+      	</div>
+			<!--コメント一覧非同期 ここまで-->
 			<!--コメント投稿フォーム-->
-			<%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+			<%= form_with(model:[@book, @book_comment], remote: true) do |f| %>
      		<%= f.text_area :comment, rows:'5', class: "form-control",placeholder: "" %>
 			<%= f.submit "送信する" %>
 			<% end %>
